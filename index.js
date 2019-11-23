@@ -1,8 +1,9 @@
 // node modules
-const fs = require("fs");
 const inquirer = require("inquirer");
 const axios = require("axios");
 const pdf = require('html-pdf');
+
+// Parameters for html-pdf module
 let pdfOptions = {   
     height: '2000',
     width: '1455',
@@ -25,33 +26,42 @@ function promptUser() {
     ]);
 }
 
+// Async function to call user info and returns an object with user data
 async function generateUserInfo(user){
-    const gitProfileUrl = `https://api.github.com/users/${user}`;
 
+    //
+    const gitProfileUrl = `https://api.github.com/users/${user}`;
 
     let responseObject = await axios.get(gitProfileUrl);
 
     return responseObject.data;
 };
 
-
+// Async function to generate repo stars with username as input, returns total number of stars
 async function generateUserRepoStars(user){
 
+    // assigns the URL to a const
     const gitRepoUrl = `https://api.github.com/users/${user}/repos?per_page=1000`;
 
+    // Called the URL and assigned the response object to a const
     const responseObject = await axios.get(gitRepoUrl);
 
+    // initialized stars variable to 0
     let stars = 0;
 
+    // Goes through each element and adds all the stars
     responseObject.data.forEach(function(element)  {
         stars += element.stargazers_count;
     });
 
+    // Returns the total amount of stars.
     return stars
 }
 
+// Will generate HTML to be converted to a PDF
 function generateHTML(userInfo, stars, color) {
 
+    // reformat location for the URL
     let location = userInfo.location.replace(/ /g, "+").replace(/,/g, "")
 
     return `
@@ -127,23 +137,28 @@ function generateHTML(userInfo, stars, color) {
     `;
   }
 
-
+// Start function that will begin asynchronously
 async function start(){
     console.log("Start...")
     try{
+
+        // Prompt user for username and favorite color
         const answers = await promptUser();
 
+        // Places user object in userInfo from username
         const userInfo = await generateUserInfo(answers.username); //returns object
-        // console.log("login: " + userInfo.login);
 
+        // Generate total repo stars from username
         const repoStars = await generateUserRepoStars(answers.username)
 
+        // Generate HTML with data called above with userInfo object, # of repo stars, and favorite color
         const html = await generateHTML(userInfo, repoStars, answers.color)
 
-
+        // user html-pdf module to generate pdf file from html in same folder.
         pdf.create(html, pdfOptions).toFile(`./${userInfo.login}.pdf`, function(err, res) {
             if (err) return console.log(err);
-            console.log(res); // { filename: '/app/businesscard.pdf' }
+            console.log("Generated PDF file location: ");
+            console.log(res);
           });
 
     }

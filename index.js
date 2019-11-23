@@ -29,11 +29,13 @@ function promptUser() {
 // Async function to call user info and returns an object with user data
 async function generateUserInfo(user){
 
-    //
+    // Assign the URL to a const
     const gitProfileUrl = `https://api.github.com/users/${user}`;
 
+    // Called the URL and assigned the response object to a cost
     let responseObject = await axios.get(gitProfileUrl);
 
+    // Returns the entire response
     return responseObject.data;
 };
 

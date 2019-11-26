@@ -9,7 +9,6 @@ let pdfOptions = {
     width: '1455',
 };
 
-
 // Prompt user for GitHub Username and favorite color
 function promptUser() {
     return inquirer.prompt([
@@ -137,36 +136,29 @@ function generateHTML(userInfo, stars, color) {
     </body>
     </html>
     `;
-  }
+}
 
 // Start function that will begin asynchronously
 async function start(){
-    console.log("Start...")
-    try{
 
-        // Prompt user for username and favorite color
-        const answers = await promptUser();
+    // Prompt user for username and favorite color
+    const answers = await promptUser();
 
-        // Places user object in userInfo from username
-        const userInfo = await generateUserInfo(answers.username); //returns object
+    // Places user object in userInfo from username
+    const userInfo = await generateUserInfo(answers.username); //returns object
 
-        // Generate total repo stars from username
-        const repoStars = await generateUserRepoStars(answers.username)
+    // Generate total repo stars from username
+    const repoStars = await generateUserRepoStars(answers.username)
 
-        // Generate HTML with data called above with userInfo object, # of repo stars, and favorite color
-        const html = await generateHTML(userInfo, repoStars, answers.color)
+    // Generate HTML with data called above with userInfo object, # of repo stars, and favorite color
+    const html = await generateHTML(userInfo, repoStars, answers.color)
 
-        // user html-pdf module to generate pdf file from html in same folder.
-        pdf.create(html, pdfOptions).toFile(`./${userInfo.login}.pdf`, function(err, res) {
-            if (err) return console.log(err);
-            console.log("Generated PDF file location: ");
-            console.log(res);
-          });
-
-    }
-    catch (err){
-        console.log(err);
-    }
+    // user html-pdf module to generate pdf file from html in same folder.
+    pdf.create(html, pdfOptions).toFile(`./${userInfo.login}.pdf`, function(err, res) {
+        if (err) return console.log(err);
+        console.log("Generated PDF file location: ");
+        console.log(res);
+        });
 }
 
 // ********** RUNNING CODE **********

@@ -28,7 +28,3 @@ Even though HTML and CSS was the first subjects we learned, it was difficult try
 ### html-pdf Node Module
 
 I have having trouble on how to user this module. It kept enlarging the HTML and it would fit to two pages every time. I found from a classmate that there are parameters that can be be set. At first doing 8.5 x 11 was too small so I played around with pixels width and length with the same 8.5 x 11 ratio and found 2000px x 1455 worked out.
-
-## Take-Aways
-
-I've learned how to use the Inspect tool to learn which attributes within bootstrap I can override with my own CSS. After doing this project, I got to understand prioritization within HTML and CSS, as well as create responsive website according to screen size and use media queries.

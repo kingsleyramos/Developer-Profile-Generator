@@ -1,16 +1,29 @@
-# Homework 9: Developer-Profile-Generator
+# Developer-Profile-Generator
 
-## Project Goal
+This simple Node application generates a PDF file from a Github username and inputting a color. The PDQ will output in the root folder. The application generates the profile in HTML and converts the HTML to a PDF file.
 
-Create a command-line application to generate a PDF file from a GitHub username.
+![](images/previewpdf.png)
+
+## Usage
+---
+1. Run `npm install` to install all dependencies
+2. Run `npm run start` to start the application
+3. Under desired GitHub username to generate a PDF file for.
+4. Enter desired color, e.g. blue. Press Enter and the PDF will generate after a few seconds
+    
+    ![](images/cli.png)
+
+5. check the root folder for [GitHub Username].pdf
+
+    ![](images/pdf.png)
 
 ## Dependencies
- * Axios
- * html-pdf
- * inquirer
+ * [Axios]() - To create API calls using Github API
+ * [html-pdf]() - To convert HTML to PDF
+ * [inquirer]() - To prompt users for information in the CLI
 
-## Challenges
-
+## Assignment Challenges
+---
 ### Axios
 
 The largest challenge was trying to understand how the axios returned data and how to place the returned object or array in a variable. I have found that the response containers different information:
